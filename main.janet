@@ -3,20 +3,16 @@
 (import ./initer)
 (import freja/open-file)
 (import ./state :as s)
+(import ./renders)
+(import ./wrap)
 
 (comment
   (func->file-line-col func->file-line-col)
   #
 )
 
-(defn draw-cat :cat
-  [self]
-  (draw-circle (get self :x 100) 100 50
-               :blue
-               #:red
-))
-
 (put s/gos :children @[])
+
 
 (def renders
   @{:name "render"
@@ -30,14 +26,14 @@
   @{:name "cat"
     :x 200
     :children @[]
-    :render |(draw-cat $)})
+    :render (wrap/fun renders/draw-cat)})
 
 (g/add-child
   renders
   @{:name "dog"
     :x 50
     :children @[]
-    :render |(draw-cat $)})
+    :render (wrap/fun renders/draw-cat)})
 
 (g/add-child s/gos renders)
 

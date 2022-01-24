@@ -47,7 +47,7 @@
 
 (comment
   #
-  )
+)
 
 (defn field
   [{:on-enter on-enter
@@ -206,9 +206,9 @@
   (cond
     (function? v)
     [:clickable {:on-click (fn [_]
-                             (nav/jump-to-function v)
-                             )}
-     [:text {:text (get (tracev (disasm v)) :name "<anonymous function>")}]]
+                             (nav/jump-to-function v))}
+     [:text {:size text-size
+             :text (get (disasm v) :name "<anonymous function>")}]]
 
     :else
     [t/textarea
@@ -278,4 +278,3 @@
     [custom {:render tick-all}]]])
 
 (e/put! state/editor-state :other [component s/state])
- 
