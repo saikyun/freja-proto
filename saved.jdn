@@ -1,0 +1,8 @@
+@{:children @[@{:children @[@{:children @[]
+          :editor-state @{}
+          :name "cat"
+          :on-event @{:freja/func true :name "drag" :source "renders.janet"}
+          :radius 100
+          :render @{:freja/func true :name "draw-rec" :source "renders.janet"}
+          :x 200
+          :y 200}] :name "render"}] :name "root"}

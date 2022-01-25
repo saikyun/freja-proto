@@ -6,6 +6,7 @@
 (use freja/flow)
 (import ./navigation :as nav)
 (import ./state :as s)
+(import ./wrap)
 
 (var dragged nil)
 (var target nil)
@@ -18,6 +19,11 @@
   [self]
   (when (self :render)
     (:render self)))
+
+(defn on-event-self
+  [self ev]
+  (when (self :on-event)
+    (:on-event self ev)))
 
 (defn tick-all
   [el]
@@ -39,8 +45,15 @@
 
   (g/map-tree render-self s/gos))
 
+(defn on-event
+  [ev]
+  (g/map-tree |(on-event-self $ ev) s/gos))
+
 (def text-size 24)
-(def text-color [0.1 0.1 0.1])
+(def text-color [0.9 0.9 0.9])
+(def bg [0.2 0.2 0.2])
+(def scene-bg [0.3 0.4 0.3])
+(def border [0.3 0.3 0.3])
 
 (defn node-item [_ _]
   "hej")
@@ -51,28 +64,28 @@
 
 (defn field
   [{:on-enter on-enter
-    :label label}]
+    :label label
+    :value value}]
   (def size (math/floor (* 0.8 text-size)))
   (def props @{:text/color :white
                :text/size (+ 4 size)
                :height (+ 4 size)
+               :text value
                :background [0.1 0.1 0.1 0.4]
                :extra-binds @{:enter (fn [props] (on-enter (gb/content props)))}})
 
-  [:row {}
-   [:block {:weight 1}
-    [t/textarea props]]
-   (when label
+  (if-not label
+    [t/textarea props]
+    [:row {}
+     [:block {:weight 1}
+      [t/textarea props]]
      [:clickable {:on-click
-                  (fn [_]
-                    (on-enter
-                      (gb/content
-                        (props :internal-gb))))}
-      [:background {:color [0.8 0.8 0.8]}
+                  (fn [_] (on-enter (gb/content (props :internal-gb))))}
+      [:background {:color bg}
        [:padding {:all 2}
         [:text {:size size
                 :color text-color
-                :text label}]]]])])
+                :text label}]]]]]))
 
 (defn expandable-nodes
   [{:parent parent
@@ -122,6 +135,7 @@
                     (update-in s/state [:expanded node] not)
                     (e/put! state/editor-state :force-refresh true))}
        [:text {:size text-size
+               :color text-color
                :text (if (expanded node) "- " "+ ")}]])]
 
    [:block {:weight 1}
@@ -171,20 +185,22 @@
 
                             true)))}
       [:block {}
-       [:background {:color (cond (= selected node) [0.1 0.1 0.1]
-
+       [:background {:color (cond
                               (= dragged node)
-                              [0.8 0.8 0.8]
+                              [0.3 0.3 0.3]
 
                               (= target node)
-                              [0.6 0.8 0.6]
+                              [0.3 0.5 0.3]
+
+                              (= selected node)
+                              [0.1 0.1 0.1]
 
                               [0 0 0 0])}
         [:text {:size text-size
                 :color (cond (= selected node)
                          [0.9 0.9 0.9]
 
-                         [0.1 0.1 0.1])
+                         text-color)
                 :text name}]]]]]
 
     [:block {}
@@ -201,27 +217,41 @@
               :editor-state 1
               :parent 1})
 
+(defn on-enter
+  [node k value]
+  (print "hit enter")
+  (def new-v (parse value))
+  (def new-v (if (symbol? new-v)
+               (let [parts (string/split "/" new-v)
+                     path (-> (take (dec (length parts)) parts)
+                              (string/join "/"))
+                     sym (symbol (last parts))]
+                 (wrap/funf sym :env (require (string path)))
+                 #
+)
+               new-v))
+  (put node k new-v)
+  (e/put! state/editor-state :force-refresh true))
+
+
 (defn edit-prop
   [node k v]
   (cond
     (function? v)
-    [:clickable {:on-click (fn [_]
-                             (nav/jump-to-function v))}
-     [:text {:size text-size
-             :text (get (disasm v) :name "<anonymous function>")}]]
+    [:row {}
+     [:block {:weight 1}
+      [:clickable {:on-click (fn [_]
+                               (nav/jump-to-function v))}
+       [:text {:size text-size
+               :color text-color
+               :text "jump"}]]]
+     [:block {:width 300}
+      [field {:on-enter (partial on-enter node k)
+              :value (get (disasm v) :name "<anonymous function>")}]]]
 
     :else
-    [t/textarea
-     @{#:state (node :editor-state)
-       :text/color :white
-       :text/size text-size
-       :text (string v)
-       :height text-size
-       :extra-binds
-       @{:enter (fn [props]
-                  (print "hit enter")
-                  (put node k (gb/content props))
-                  (e/put! state/editor-state :force-refresh true))}}]))
+    [field {:on-enter (partial on-enter node k)
+            :value (string/format "%p" v)}]))
 
 (defn editor-window
   [node]
@@ -229,8 +259,9 @@
                     :when (not (ignored k))]
                 [[:block {:height (+ 2 text-size)}
                   [:text {:size text-size
+                          :color text-color
                           :text (string k ": ")}]]
-                 [:block {:width 200
+                 [:block {:width 400
                           :height (+ 2 text-size)}
                   (edit-prop node k v)]])]
     [:block {}
@@ -250,31 +281,34 @@
   (def {:root root
         :expanded expanded
         :selected selected} props)
-  [:block {}
-   [:event-handler {:on-event (fn [_ ev]
-                                (match ev
-                                  [:release _]
-                                  (when dragged
-                                    (print "top")
-                                    (set dragged nil)
-                                    (set target nil)
-                                    false)))}
-    [:background {:color [0.9 0.9 0.9]}
-     [:padding {:all 6}
-      [:block {}
-       [:row {}
-        [:block {}
-         [node-item {:node root :expanded expanded :selected selected}]]
-        (when selected
-          (unless (selected :editor-state)
-            (put selected
-                 :editor-state
-                 @{}))
-          [:block {}
-           [:padding {:left 12}
-            [editor-window selected]]])]]]]]
+  [:background {:color border}
+   [:padding {:left 2}
+    [:event-handler {:on-event (fn [_ ev]
+                                 (match ev
+                                   [:release _]
+                                   (when dragged
+                                     (print "top")
+                                     (set dragged nil)
+                                     (set target nil)
+                                     false)))}
+     [:background {:color bg}
+      [:padding {:all 6}
+       [:block {}
+        [:row {}
+         [:block {}
+          [node-item {:node root :expanded expanded :selected selected}]]
+         (when selected
+           (unless (selected :editor-state)
+             (put selected
+                  :editor-state
+                  @{}))
+           [:block {}
+            [:padding {:left 12}
+             [editor-window selected]]])]]]]]
 
-   [:block {}
-    [custom {:render tick-all}]]])
+    [:background {:color scene-bg}
+     [:block {}
+      [custom {:render tick-all
+               :on-event on-event}]]]]])
 
 (e/put! state/editor-state :other [component s/state])

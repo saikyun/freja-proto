@@ -5,51 +5,95 @@
 (import ./state :as s)
 (import ./renders)
 (import ./wrap)
+(import ./navigation :as nav)
+(import ./initial-gos)
 
 (comment
   (func->file-line-col func->file-line-col)
+
+  (-> (seq [[k v] :pairs form
+            :let [v (if (function? v)
+                      "hej"
+                      v)]]
+        [k v])
+      from-pairs)
+
+  (pp s/gos)
   #
 )
 
-(put s/gos :children @[])
+(defn traverse
+  [node]
+  (-> (seq [[k v] :pairs node
+            :when (not= k :parent)
+            :let [v (cond
+                      (= k :children)
+                      (map traverse v)
 
+                      (function? v)
+                      (-> (nav/get-source v)
+                          (put :sourcemap nil)
+                          (put :freja/func true))
 
-(def renders
-  @{:name "render"
-    :tick (fn [self] (loop [c :in (self :children)
-                            :when (c :render)]
-                       (:render c)))
-    :children @[]})
+                      v)]]
+        [k v])
+      from-pairs))
 
-(g/add-child
-  renders
-  @{:name "cat"
-    :x 200
-    :children @[]
-    :render (wrap/fun renders/draw-cat)})
+(defn persist
+  []
+  (def data @"")
+  (xprintf data "%m" (traverse s/gos))
+  (pp data)
+  (spit "saved.jdn" data))
 
-(g/add-child
-  renders
-  @{:name "dog"
-    :x 50
-    :children @[]
-    :render (wrap/fun renders/draw-cat)})
+(defn load-traverse
+  [node]
+  (-> (seq [[k v] :pairs node
+            :let [v (cond
+                      (= k :children)
+                      (map load-traverse v)
 
-(g/add-child s/gos renders)
+                      (and (dictionary? v)
+                           (v :freja/func))
+                      (let [{:source source
+                             :name name} v
+                            env (require source)]
+                        (assert (get env (symbol name))
+                                (string/format
+                                  ``could not find function: %m
+in env with keys: %m`` v env))
+                        (wrap/funf (symbol name) :env env))
 
-(initer/force-refresh!)
+                      v)]]
+        [k v])
+      from-pairs))
+
+(defn load
+  []
+  (->> (slurp "saved.jdn")
+       parse
+       load-traverse))
+
+(put s/state :freja/quit (fn [data]
+                           (persist)
+                           (pp data)
+                           (print "lul")))
+
+(defn bigload
+  []
+  (def res (load))
+  (pp res)
+  (table/clear s/gos)
+  (merge-into s/gos res)
+  (initer/force-refresh!))
+
+(bigload)
 
 (comment
-  (state :selected)
-  (put (state :selected)
-       :tick
-       (fn [self]
-         (loop [c :in (self :children)
-                :when (c :render)]
-           (:render c))))
+  (persist)
+  #
+)
 
-  (put (state :selected)
-       :render
-       (fn [self] (draw-cat self)))
+(comment
   #
 )
