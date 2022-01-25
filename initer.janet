@@ -8,9 +8,6 @@
 (import ./state :as s)
 (import ./wrap)
 
-(var dragged nil)
-(var target nil)
-
 (defn force-refresh!
   []
   (e/put! state/editor-state :force-refresh true))
@@ -32,22 +29,42 @@
       (get-mouse-position)
       [(el :render-x) (el :render-y)]))
 
-  (when dragged
-    (def [w h] (measure-text (dragged :name) :font :sans-serif))
+  (g/map-tree render-self s/gos)
+
+  (when (s/state :dragged)
+    (def [w h] (measure-text ((s/state :dragged) :name) :font :sans-serif))
 
     (def p (update mp 1 - h))
     (draw-rectangle ;p (+ w 4) (+ h 4) [0.1 0.1 0.1 0.8])
     (draw-text
-      (dragged :name)
+      ((s/state :dragged) :name)
       (v/v+ p [2 2])
       :font :sans-serif
-      :color [0.9 0.9 0.9]))
-
-  (g/map-tree render-self s/gos))
+      :color [0.9 0.9 0.9])))
 
 (defn on-event
   [ev]
-  (g/map-tree |(on-event-self $ ev) s/gos))
+  (def kind (first ev))
+  (def new-ev
+    (cond
+      (or (= kind :press)
+          (= kind :mouse-move)
+          (= kind :drag)
+          (= kind :release)
+          (= kind :double-click)
+          (= kind :triple-click))
+      [kind (v/v- (ev 1) [(dyn :offset-x)
+                          (dyn :offset-y)])
+       ;(drop 2 ev)]
+
+      (or (= kind :scroll))
+      [kind (ev 1) (v/v- (ev 2) [(dyn :offset-x)
+                                 (dyn :offset-y)])
+       ;(drop 3 ev)]
+
+      (printf "unrecog ev: %m" ev)))
+
+  (g/map-tree |(on-event-self $ new-ev) s/gos))
 
 (def text-size 24)
 (def text-color [0.9 0.9 0.9])
@@ -146,50 +163,51 @@
                         (match ev
                           [:press pos]
                           (when (in-el? el pos)
-                            (set dragged node)
+                            (put s/state :dragged node)
                             #(force-refresh!)
                             false)
 
                           [:drag pos]
-                          (when (and dragged
-                                     (not= dragged node))
+                          (when (and (s/state :dragged)
+                                     (not= (s/state :dragged) node))
                             (cond
-                              (and (not= target node)
+                              (and (not= (s/state :target) node)
                                    (in-el? el pos)
-                                   (not (g/grand-parent? dragged node)))
+                                   (not (g/grand-parent? (s/state :dragged) node)))
                               (do
-                                (set target node)
+                                (put s/state :target node)
                                 (force-refresh!)
                                 true)
 
-                              (and (= target node)
+                              (and (= (s/state :target) node)
                                    (not (in-el? el pos)))
                               (do
-                                (set target nil)
+                                (put s/state :target nil)
                                 (force-refresh!)
                                 true)))
 
                           [:release pos]
-                          (when (and dragged
+                          (when (and (s/state :dragged)
                                      (in-el? el pos))
-                            (if (= dragged node)
+                            (if (= (s/state :dragged) node)
                               (do
                                 (put s/state :selected node)
                                 (e/put! state/focus :focus node))
-                              (g/set-parent dragged node))
+                              (g/set-parent (s/state :dragged)
+                                            node))
 
-                            (set dragged nil)
-                            (set target nil)
+                            (put s/state :dragged nil)
+                            (put s/state :target nil)
 
                             (force-refresh!)
 
                             true)))}
       [:block {}
        [:background {:color (cond
-                              (= dragged node)
+                              (= (s/state :dragged) node)
                               [0.3 0.3 0.3]
 
-                              (= target node)
+                              (= (s/state :target) node)
                               [0.3 0.5 0.3]
 
                               (= selected node)
@@ -286,10 +304,10 @@
     [:event-handler {:on-event (fn [_ ev]
                                  (match ev
                                    [:release _]
-                                   (when dragged
+                                   (when (s/state :dragged)
                                      (print "top")
-                                     (set dragged nil)
-                                     (set target nil)
+                                     (put s/state :dragged nil)
+                                     (put s/state :target nil)
                                      false)))}
      [:background {:color bg}
       [:padding {:all 6}

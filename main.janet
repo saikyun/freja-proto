@@ -48,25 +48,27 @@
 
 (defn load-traverse
   [node]
-  (-> (seq [[k v] :pairs node
-            :let [v (cond
-                      (= k :children)
-                      (map load-traverse v)
+  (as-> (seq [[k v] :pairs node
+              :let [v (cond
+                        (= k :children)
+                        (map load-traverse v)
 
-                      (and (dictionary? v)
-                           (v :freja/func))
-                      (let [{:source source
-                             :name name} v
-                            env (require source)]
-                        (assert (get env (symbol name))
-                                (string/format
-                                  ``could not find function: %m
+                        (and (dictionary? v)
+                             (v :freja/func))
+                        (let [{:source source
+                               :name name} v
+                              env (require source)]
+                          (assert (get env (symbol name))
+                                  (string/format
+                                    ``could not find function: %m
 in env with keys: %m`` v env))
-                        (wrap/funf (symbol name) :env env))
+                          (wrap/funf (symbol name) :env env))
 
-                      v)]]
-        [k v])
-      from-pairs))
+                        v)]]
+          [k v])
+        new-node
+        (from-pairs new-node)
+        (update new-node :children |(when $ (map |(put $ :parent new-node) $)))))
 
 (defn load
   []
