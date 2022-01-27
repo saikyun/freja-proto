@@ -7,10 +7,7 @@
 (import ./navigation :as nav)
 (import ./state :as s)
 (import ./wrap)
-
-(defn force-refresh!
-  []
-  (e/put! state/editor-state :force-refresh true))
+(import ./renders)
 
 (defn render-self
   [self]
@@ -62,9 +59,10 @@
                                  (dyn :offset-y)])
        ;(drop 3 ev)]
 
-      (printf "unrecog ev: %m" ev)))
+      nil))
 
-  (g/map-tree |(on-event-self $ new-ev) s/gos))
+  (when new-ev
+    (g/map-tree |(on-event-self $ new-ev) s/gos)))
 
 (def text-size 24)
 (def text-color [0.9 0.9 0.9])
@@ -119,10 +117,16 @@
     [:padding {:bottom 16}
      [field {:label "Add"
              :on-enter (fn [label]
-                         (g/add-child parent
-                                      @{:name label
-                                        :children @[]})
-                         (force-refresh!))}]]]])
+                         (def node (->
+                                     (g/new (string label) :parent parent)
+                                     (merge-into {:x 0
+                                                  :y 0
+                                                  :w 50
+                                                  :h 50
+                                                  :on-event (wrap/fun renders/drag)
+                                                  :render (wrap/fun renders/draw-rec)})))
+                         (put s/state :selected node)
+                         (s/force-refresh!))}]]]])
 
 (defn in-el?
   [el [px py]]
@@ -150,7 +154,7 @@
       [:clickable
        {:on-click (fn [_]
                     (update-in s/state [:expanded node] not)
-                    (e/put! state/editor-state :force-refresh true))}
+                    (s/force-refresh!))}
        [:text {:size text-size
                :color text-color
                :text (if (expanded node) "- " "+ ")}]])]
@@ -176,14 +180,14 @@
                                    (not (g/grand-parent? (s/state :dragged) node)))
                               (do
                                 (put s/state :target node)
-                                (force-refresh!)
+                                (s/force-refresh!)
                                 true)
 
                               (and (= (s/state :target) node)
                                    (not (in-el? el pos)))
                               (do
                                 (put s/state :target nil)
-                                (force-refresh!)
+                                (s/force-refresh!)
                                 true)))
 
                           [:release pos]
@@ -199,7 +203,7 @@
                             (put s/state :dragged nil)
                             (put s/state :target nil)
 
-                            (force-refresh!)
+                            (s/force-refresh!)
 
                             true)))}
       [:block {}
@@ -249,7 +253,7 @@
 )
                new-v))
   (put node k new-v)
-  (e/put! state/editor-state :force-refresh true))
+  (s/force-refresh!))
 
 
 (defn edit-prop
@@ -292,7 +296,7 @@
              :on-enter (fn [content]
                          (put node (keyword content) @"")
                          #(put node :render (fn [self] (g/draw-cat self)))
-                         (force-refresh!))}]]))
+                         (s/force-refresh!))}]]))
 
 (defn component
   [props]

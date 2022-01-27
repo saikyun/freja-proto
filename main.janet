@@ -18,6 +18,18 @@
         [k v])
       from-pairs)
 
+  (g/add-child s/gos @{:children @[]
+                       :editor-state @{}
+                       :h 50
+                       :name "Gunpriest"
+                       :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
+                       :render @{:freja/func true :name "texture" :source "renders.janet"}
+                       :render-x 174.851
+                       :render-y 265.6
+                       :w 50
+                       :x 174.851
+                       :y 265.6})
+
   (pp s/gos)
   #
 )
@@ -26,6 +38,8 @@
   [node]
   (-> (seq [[k v] :pairs node
             :when (not= k :parent)
+            # TODO: fix this
+            :when (not= k :hover)
             :let [v (cond
                       (= k :children)
                       (map traverse v)
@@ -43,12 +57,13 @@
   []
   (def data @"")
   (xprintf data "%m" (traverse s/gos))
-  (pp data)
+  #(pp data)
   (spit "saved.jdn" data))
 
 (defn load-traverse
   [node]
-  (as-> (seq [[k v] :pairs node
+  (def new-node
+    (-> (seq [[k v] :pairs node
               :let [v (cond
                         (= k :children)
                         (map load-traverse v)
@@ -66,9 +81,11 @@ in env with keys: %m`` v env))
 
                         v)]]
           [k v])
-        new-node
-        (from-pairs new-node)
-        (update new-node :children |(when $ (map |(put $ :parent new-node) $)))))
+        from-pairs))
+
+  (update new-node :children |(when $ (map |(put $ :parent new-node) $)))
+
+  new-node)
 
 (defn load
   []
@@ -84,15 +101,20 @@ in env with keys: %m`` v env))
 (defn bigload
   []
   (def res (load))
-  (pp res)
+  #(pp res)
   (table/clear s/gos)
   (merge-into s/gos res)
-  (initer/force-refresh!))
+
+  (map |(put $ :parent s/gos) (s/gos :children))
+
+  (s/force-refresh!))
 
 (bigload)
 
 (comment
   (persist)
+
+  (put s/gos :dog true)
   #
 )
 
