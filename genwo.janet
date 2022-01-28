@@ -6,7 +6,6 @@
 (defn genwo
   []
   (let [size 64
-        offset 2
         w 10
         h 10
         start [size (* 1.15 size)]
@@ -28,8 +27,26 @@
                                  (* xi (* 0.8660254 2 size)))
                               (+ (start 1)
                                  (* yi 1.5 size))]
+                       :height 0
+                       :tile-pos [xi yi]
                        :radius size
                        :color [0.4 0.2 0.4]
+                       :hover-color 0xB4BCD8ff
+                       :render (wrap/fun r/draw-hexa)})))
+
+    (loop [yi :range [1 4]
+           xi :range [1 4]]
+      (-> (g/new "Tile Upper" :parent world)
+          (merge-into {:pos @[(+ (start 0)
+                                 (* 0.8660254 size (mod yi 2))
+                                 (* xi (* 0.8660254 2 size)))
+                              (+ (start 1)
+                                 (* yi 1.5 size))]
+                       :z 1
+                       :height (* size 0.8)
+                       :tile-pos [xi yi]
+                       :radius size
+                       :color [0.5 0.3 0.5]
                        :hover-color 0xB4BCD8ff
                        :render (wrap/fun r/draw-hexa)})))
 

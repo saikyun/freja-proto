@@ -8,6 +8,7 @@
 (import ./state :as s)
 (import ./wrap)
 (import ./renders)
+(import freja/input)
 
 (defn render-self
   [self]
@@ -197,8 +198,10 @@
                               (do
                                 (put s/state :selected node)
                                 (e/put! state/focus :focus node))
-                              (g/set-parent (s/state :dragged)
-                                            node))
+
+                              (if (input/key-down? :left-alt)
+                                (g/clone (s/state :dragged) :parent node)
+                                (g/set-parent (s/state :dragged) node)))
 
                             (put s/state :dragged nil)
                             (put s/state :target nil)

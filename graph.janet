@@ -78,3 +78,16 @@
   (-> @{:name name
         :children @[]}
       (set-parent parent)))
+
+(defn clone
+  [to-clone &keys {:parent parent}]
+  (default parent (to-clone :parent))
+
+  (-> (seq [[k v] :pairs to-clone]
+        [k (case (type v)
+             :table (table/clone v)
+             :array (array ;v)
+             :buffer (buffer ;v)
+             v)])
+      from-pairs
+      (set-parent parent)))

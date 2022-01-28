@@ -34,15 +34,68 @@
 (defn draw-hexa
   [self]
   (def {:pos p
+        :z z
+        :height height
         :radius radius
+        :tile-pos tile-pos
         :hover hover
         :hover-color hover-color
         :color color} self)
 
-  (draw-poly p 6 radius 0 [0.1 0.2 0.2])
-  (draw-poly p 6 (- radius 4) 0 (if hover
-                                  hover-color
-                                  color)))
+  (default z 0)
+
+  (def p (v/v+ p [0 (* z -1 height)]))
+
+  (draw-poly (v/v+ p [0 height]) 6 radius 0 [0.1 0.2 0.2])
+  (draw-poly p 6 (+ 0 radius) 0 [0.1 0.2 0.2])
+  (draw-poly p 6 radius 0 (if hover
+                            hover-color
+                            color))
+
+  (def n 0.8660254)
+
+  (def radius (* radius 0.95))
+
+  # draw triangles
+  (comment defer (rl-pop-matrix)
+           (rl-push-matrix)
+
+           (rl-translatef ;p 0)
+
+           (var last-p [0 radius])
+
+           (loop [p :in [[(* n radius) (* 0.5 radius)]
+                         [(* n radius) (* -0.5 radius)]
+                         [0 (* -1 radius)]
+                         [(* -1 n radius) (* -0.5 radius)]
+                         [(* -1 n radius) (* 0.5 radius)]
+                         [0 radius]]]
+             (def dir (-> (v/v+ last-p p)
+                          (v/v* 0.5)))
+             (def norma (map math/abs dir))
+             (def dir (map (fn [v1 v2] (if (zero? v2) 0 (/ v1 v2))) dir norma))
+             (draw-triangle-fan
+               [[0 0]
+                last-p
+                p]
+               [(mod (* 0.5 (inc (dir 0))) 2)
+                0
+                0
+                (mod (* 0.5 (inc (dir 1))) 2)])
+             (set last-p p))
+
+           (comment
+             (draw-triangle-fan
+               [[0 0]
+                [(* n radius) (* 0.5 radius)]
+                [(* n radius) (* -0.5 radius)]]
+               :red)
+
+             (draw-triangle-fan
+               [[0 0]
+                [(* n radius) (* -0.5 radius)]
+                [0 (* -1 radius)]]
+               [0.5 0.5 0.5]))))
 
 (defn texture
   [self]
@@ -110,14 +163,21 @@
   [hexas p]
   (var d nil)
   (var n nil)
+
   (loop [c :in hexas
-         :let [dist (v/dist (c :pos) p)]
+         :let [dist (min (v/dist (c :pos) p)
+                         (v/dist (v/v+ (c :pos) [0 (* -1
+                                                      (c :height)
+                                                      (get c :z 0))])
+                                 p))]
          :when (<= dist (c :radius))]
     (cond (nil? d)
       (do (set d dist)
         (set n c))
 
-      (< dist d)
+      (or
+        (< (get n :z 0) (get c :z 0))
+        (< dist d))
       (do
         (set d dist)
         (set n c))))
@@ -145,6 +205,7 @@
             tile (hexa-hit (world :children) pos)]
         (when-let [{:pos p} tile]
           (def [nx ny] p)
+          (def ny (+ ny (* (get tile :z 0) (tile :height) -1)))
           (-> self
               (put :x nx)
               (put :y ny)))))

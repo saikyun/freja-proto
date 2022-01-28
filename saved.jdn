@@ -1,704 +1,995 @@
 @{:children @[@{:children @[
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[64 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[174.851 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[285.703 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[396.554 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[507.405 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[618.256 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[729.108 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[839.959 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[950.81 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1061.66 73.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 0)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[119.426 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[230.277 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[341.128 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[451.979 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[562.831 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[673.682 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[784.533 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[895.384 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1006.24 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1117.09 169.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 1)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[64 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[174.851 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[285.703 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[396.554 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[507.405 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[618.256 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[729.108 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[839.959 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[950.81 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1061.66 265.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 2)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[119.426 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[230.277 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[341.128 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[451.979 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[562.831 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[673.682 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[784.533 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[895.384 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1006.24 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1117.09 361.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 3)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[64 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[174.851 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[285.703 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[396.554 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[507.405 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[618.256 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[729.108 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[839.959 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[950.81 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1061.66 457.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 4)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[119.426 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[230.277 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[341.128 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[451.979 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[562.831 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[673.682 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[784.533 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[895.384 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1006.24 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1117.09 553.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 5)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[64 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[174.851 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[285.703 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[396.554 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[507.405 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[618.256 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[729.108 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[839.959 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[950.81 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1061.66 649.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 6)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[119.426 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[230.277 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[341.128 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[451.979 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[562.831 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[673.682 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[784.533 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[895.384 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1006.24 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1117.09 745.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 7)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[64 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[174.851 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[285.703 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[396.554 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[507.405 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[618.256 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[729.108 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[839.959 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[950.81 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1061.66 841.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 8)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[119.426 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (0 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[230.277 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[341.128 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[451.979 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[562.831 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (4 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[673.682 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (5 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[784.533 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (6 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[895.384 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (7 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1006.24 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (8 9)}
         @{:children @[]
           :color (0.4 0.2 0.4)
+          :height 0
           :hover-color 3032275199
           :name "Tile"
           :pos @[1117.09 937.6]
           :radius 64
-          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}}]
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (9 9)}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[230.277 169.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 1)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[341.128 169.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 1)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[451.979 169.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 1)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[174.851 265.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 2)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[285.703 265.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 2)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[396.554 265.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 2)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[230.277 361.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (1 3)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[341.128 361.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (2 3)
+          :z 1}
+        @{:children @[]
+          :color (0.5 0.3 0.5)
+          :height 51.2
+          :hover-color 3032275199
+          :name "Tile Upper"
+          :pos @[451.979 361.6]
+          :radius 64
+          :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
+          :tile-pos (3 3)
+          :z 1}]
+      :editor-state @{}
       :grid-size (10 10)
       :name "World"
       :on-event @{:freja/func true :name "hover-hexa" :source "renders.janet"}
@@ -710,8 +1001,14 @@
       :name "Gunpriest"
       :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
       :render @{:freja/func true :name "texture" :source "renders.janet"}
-      :render-x 174.851
-      :render-y 265.6
+      :render-x 285.703
+      :render-y 73.6
       :w 50
-      :x 174.851
-      :y 265.6}] :name "root"}
+      :x 285.703
+      :y 73.6} @{:children @[]
+      :editor-state @{}
+      :h 50
+      :name "Trash"
+      :w 50
+      :x 0
+      :y 0}] :name "root"}
