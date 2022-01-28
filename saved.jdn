@@ -1001,14 +1001,28 @@
       :name "Gunpriest"
       :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
       :render @{:freja/func true :name "texture" :source "renders.janet"}
-      :render-x 285.703
-      :render-y 73.6
+      :render-x 174.851
+      :render-y 214.4
+      :texture :gunpriest
       :w 50
-      :x 285.703
-      :y 73.6} @{:children @[]
+      :x 174.851
+      :y 214.4} @{:children @[]
       :editor-state @{}
       :h 50
       :name "Trash"
       :w 50
       :x 0
-      :y 0}] :name "root"}
+      :y 0} @{:children @[]
+      :editor-state @{}
+      :h 50
+      :locked true
+      :name "Ladder"
+      :offset [0 -90]
+      :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
+      :render @{:freja/func true :name "texture" :source "renders.janet"}
+      :render-x 119.426
+      :render-y 361.6
+      :texture :ladder
+      :w 50
+      :x 119.426
+      :y 361.6}] :name "root"}

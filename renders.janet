@@ -101,15 +101,19 @@
   [self]
   (def {:x x
         :y y
-        :w w :h h} self)
+        :offset offset
+        :w w :h h
+        :texture texture} self)
+
+  (default offset [0 0])
 
   (update self :render-x |(+ (or $ 0) (* 0.2 (- x (or $ 0)))))
   (update self :render-y |(+ (or $ 0) (* 0.2 (- y (or $ 0)))))
 
   (draw-texture
-    (in assets :gunpriest)
-    (math/floor (- (self :render-x) (* w 0.5)))
-    (math/floor (- (self :render-y) (* h 0.5)))
+    (in assets texture)
+    (math/floor (+ (offset 0) (- (self :render-x) (* w 0.5))))
+    (math/floor (+ (offset 1) (- (self :render-y) (* h 0.5))))
     :white))
 
 (defn in-rec?
@@ -185,39 +189,40 @@
 
 (defn snap-drag
   [self ev]
-  # (pp ev)
-  (def pos (if (= :scroll (first ev))
-             (ev 2)
-             (ev 1)))
+  (unless (self :locked)
+    # (pp ev)
+    (def pos (if (= :scroll (first ev))
+               (ev 2)
+               (ev 1)))
 
-  (match ev
-    [:press _]
-    (when (in-rec? self pos)
-      (put s/state :selected self)
-      (put s/state :dragged-go self)
-      (put s/state :dragged-go-offset (v/v- [(self :x)
-                                             (self :y)]
-                                            pos)))
+    (match ev
+      [:press _]
+      (when (in-rec? self pos)
+        (put s/state :selected self)
+        (put s/state :dragged-go self)
+        (put s/state :dragged-go-offset (v/v- [(self :x)
+                                               (self :y)]
+                                              pos)))
 
-    [:drag [x y]]
-    (when (= (s/state :dragged-go) self)
-      (let [world (first (g/find-named "World" s/gos))
-            tile (hexa-hit (world :children) pos)]
-        (when-let [{:pos p} tile]
-          (def [nx ny] p)
-          (def ny (+ ny (* (get tile :z 0) (tile :height) -1)))
-          (-> self
-              (put :x nx)
-              (put :y ny)))))
+      [:drag [x y]]
+      (when (= (s/state :dragged-go) self)
+        (let [world (first (g/find-named "World" s/gos))
+              tile (hexa-hit (world :children) pos)]
+          (when-let [{:pos p} tile]
+            (def [nx ny] p)
+            (def ny (+ ny (* (get tile :z 0) (tile :height) -1)))
+            (-> self
+                (put :x nx)
+                (put :y ny)))))
 
-    [:release _]
-    (when (= (s/state :dragged-go) self)
-      (-> s/state
-          (put :dragged-go nil)
-          (put :dragged-go-offset nil))))
+      [:release _]
+      (when (= (s/state :dragged-go) self)
+        (-> s/state
+            (put :dragged-go nil)
+            (put :dragged-go-offset nil))))
 
-  # take code from other drag thing
-)
+    # take code from other drag thing
+))
 
 (defn hover
   [self ev]
