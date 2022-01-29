@@ -46,12 +46,22 @@
 
   (def p (v/v+ p [0 (* z -1 height)]))
 
-  (draw-poly (v/v+ p [0 height]) 6 radius 0 [0.1 0.2 0.2])
-  (draw-poly p 6 (+ 0 radius) 0 [0.1 0.2 0.2])
-  (draw-poly p 6 radius 0 (if hover
-                            hover-color
-                            color))
+  (defer (rl-pop-matrix)
+    (rl-push-matrix)
 
+    (rl-scalef 1 0.5 1)
+
+    (loop [i :range [0 (inc z)]]
+      (draw-poly (v/v+ p [0 (* height i)]) 6 radius 0 [0.1 0.2 0.2]))
+    (draw-poly p 6 (+ -1 radius) 0 (if hover
+                                     (hover-color self)
+                                     (if (= 3 (length color))
+                                       [;color 0.7]
+                                       color)))
+    #  (draw-poly p 6 (- radius 1) 0 (if hover
+    #                                  hover-color
+    #                                  color))
+)
   (def n 0.8660254)
 
   (def radius (* radius 0.95))
@@ -103,6 +113,7 @@
         :y y
         :offset offset
         :w w :h h
+        :scale scale
         :texture texture} self)
 
   (default offset [0 0])
@@ -110,11 +121,26 @@
   (update self :render-x |(+ (or $ 0) (* 0.2 (- x (or $ 0)))))
   (update self :render-y |(+ (or $ 0) (* 0.2 (- y (or $ 0)))))
 
-  (draw-texture
-    (in assets texture)
-    (math/floor (+ (offset 0) (- (self :render-x) (* w 0.5))))
-    (math/floor (+ (offset 1) (- (self :render-y) (* h 0.5))))
-    :white))
+  (def b (max 0.3 (get self :brightness 1)))
+
+  (defer (rl-pop-matrix)
+    (rl-push-matrix)
+    (rl-translatef
+      (+ (offset 0) (- (self :render-x) (* w 0.5)))
+      (+ (offset 1) (- (self :render-y) (* h 0.5)))
+      0)
+    (when scale
+      (rl-scalef (scale 0) (scale 1) 0))
+    (draw-texture-ex
+      (in assets texture)
+      [0
+       0]
+      0
+      1
+      [b
+       b
+       b
+       (+ 0.8 (* 0.2 b))])))
 
 (defn in-rec?
   [rec [px py]]
@@ -168,11 +194,15 @@
   (var d nil)
   (var n nil)
 
+  (def p @[;p])
+  (update p 1 * 2)
+
   (loop [c :in hexas
          :let [dist (min (v/dist (c :pos) p)
-                         (v/dist (v/v+ (c :pos) [0 (* -1
-                                                      (c :height)
-                                                      (get c :z 0))])
+                         (v/dist (v/v+ (c :pos)
+                                       [0 (* -1
+                                             (c :height)
+                                             (get c :z 0))])
                                  p))]
          :when (<= dist (c :radius))]
     (cond (nil? d)
@@ -208,9 +238,10 @@
       (when (= (s/state :dragged-go) self)
         (let [world (first (g/find-named "World" s/gos))
               tile (hexa-hit (world :children) pos)]
-          (when-let [{:pos p} tile]
+          (when-let [{:pos p :color c} tile]
+            (put self :brightness (c 3))
             (def [nx ny] p)
-            (def ny (+ ny (* (get tile :z 0) (tile :height) -1)))
+            (def ny (+ (* 0.5 ny) (* (get tile :z 0) 0.5 (tile :height) -1)))
             (-> self
                 (put :x nx)
                 (put :y ny)))))
@@ -345,7 +376,7 @@
 
   (draw-line-ex (v/v+
                   [(math/floor (+ (from :x)))
-                   (math/floor (+ (* 64 0.75) (from :y)))]
+                   (math/floor (+ (* 32 0.75) (from :y)))]
                   (map math/floor
                        (v/v*
                          (v/v-
@@ -356,7 +387,7 @@
                          0.2)))
                 (v/v+
                   [(math/floor (+ (from :x)))
-                   (math/floor (+ (* 64 0.75) (from :y)))]
+                   (math/floor (+ (* 32 0.75) (from :y)))]
                   (map math/floor
                        (v/v*
                          (v/v-
