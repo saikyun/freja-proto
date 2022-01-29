@@ -1137,7 +1137,7 @@
       :y 361.6} @{:children @[]
       :editor-state @{}
       :h 50
-      :locked false
+      :locked true
       :name "Pole2"
       :offset [0 -70]
       :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
@@ -1149,7 +1149,6 @@
       :x 729.108
       :y 214.4} @{:children @[]
       :editor-state @{}
-      :from "Pole1"
       :h 50
       :locked false
       :name "Rope"
@@ -1159,13 +1158,12 @@
       :render-x 451.979
       :render-y 310.4
       :texture :pole
-      :to "Pole2"
       :w 50
-      :x 396.554
-      :y 214.4} @{:children @[]
+      :x 451.979
+      :y 310.4} @{:children @[]
       :editor-state @{}
       :h 50
-      :locked false
+      :locked true
       :name "Pole1"
       :offset [0 -70]
       :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
@@ -1182,35 +1180,9 @@
       :offset @[0 0]
       :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
       :render @{:freja/func true :name "texture" :source "renders.janet"}
-      :render-x 451.979
-      :render-y 310.4
+      :render-x 729.108
+      :render-y 214.4
       :texture :gunpriest
       :w 50
-      :x 451.979
-      :y 310.4} @{:children @[]
-      :editor-state @{}
-      :h 150
-      :locked false
-      :name "Cultist"
-      :offset @[0 0]
-      :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
-      :render @{:freja/func true :name "texture" :source "renders.janet"}
-      :render-x 562.831
-      :render-y 361.6
-      :texture :cultist
-      :w 90
-      :x 562.831
-      :y 361.6} @{:children @[]
-      :editor-state @{}
-      :h 50
-      :locked false
-      :name "Ladder"
-      :offset [0 -90]
-      :on-event @{:freja/func true :name "snap-drag" :source "renders.janet"}
-      :render @{:freja/func true :name "texture" :source "renders.janet"}
-      :render-x 729.108
-      :render-y 457.6
-      :texture :ladder
-      :w 50
       :x 729.108
-      :y 457.6}] :name "root"}
+      :y 214.4}] :name "root"}

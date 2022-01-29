@@ -50,6 +50,22 @@
                        :hover-color 0xB4BCD8ff
                        :render (wrap/fun r/draw-hexa)})))
 
+    (loop [yi :range [1 4]
+           xi :range [6 10]]
+      (-> (g/new "Tile Upper" :parent world)
+          (merge-into {:pos @[(+ (start 0)
+                                 (* 0.8660254 size (mod yi 2))
+                                 (* xi (* 0.8660254 2 size)))
+                              (+ (start 1)
+                                 (* yi 1.5 size))]
+                       :z 1
+                       :height (* size 0.8)
+                       :tile-pos [xi yi]
+                       :radius size
+                       :color [0.5 0.3 0.5]
+                       :hover-color 0xB4BCD8ff
+                       :render (wrap/fun r/draw-hexa)})))
+
     # rows, then cols
     (comment loop [yi :range [0 h]
                    xi :range [0 w]

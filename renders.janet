@@ -281,3 +281,89 @@
 
   # take code from other drag thing
 )
+
+(defn draw-rope
+  [self]
+  #(update self :to |(if (string? $) (first (g/find-named $)) $))
+
+  (def {:from from
+        :to to} self)
+
+  (def from (first (g/find-named from)))
+  (def to (first (g/find-named to)))
+
+  (def {:offset o1} from)
+  (def {:offset o2} to)
+
+  (draw-line-ex [(math/floor (+ (from :x) (o1 0)))
+                 (math/floor (+ (from :y) (o1 1)))]
+                [(math/floor (+ (to :x) (o2 0)))
+                 (math/floor (+ (to :y) (o2 1)))]
+                7
+                0xF9B4F2ff)
+
+  (draw-line-ex [(math/floor (+ (from :x)))
+                 (math/floor (+ (from :y)))]
+                (v/v+
+                  [(math/floor (+ (from :x)))
+                   (math/floor (+ (from :y)))]
+                  (map math/floor
+                       (v/v*
+                         (v/v-
+                           [(math/floor (+ (to :x)))
+                            (math/floor (+ (to :y)))]
+                           [(math/floor (+ (from :x)))
+                            (math/floor (+ (from :y)))])
+                         0.2)))
+                10
+                0x000000aa)
+
+  (draw-line-ex (v/v+
+                  [(math/floor (+ (from :x)))
+                   (math/floor (+ (from :y)))]
+                  (map math/floor
+                       (v/v*
+                         (v/v-
+                           [(math/floor (+ (to :x)))
+                            (math/floor (+ (to :y)))]
+                           [(math/floor (+ (from :x)))
+                            (math/floor (+ (from :y)))])
+                         0.8)))
+                (v/v+
+                  [(math/floor (+ (from :x)))
+                   (math/floor (+ (from :y)))]
+                  (map math/floor
+                       (v/v*
+                         (v/v-
+                           [(math/floor (+ (to :x)))
+                            (math/floor (+ (to :y)))]
+                           [(math/floor (+ (from :x)))
+                            (math/floor (+ (from :y)))])
+                         1)))
+                10
+                0x000000aa)
+
+  (draw-line-ex (v/v+
+                  [(math/floor (+ (from :x)))
+                   (math/floor (+ (* 64 0.75) (from :y)))]
+                  (map math/floor
+                       (v/v*
+                         (v/v-
+                           [(math/floor (+ (to :x)))
+                            (math/floor (+ (to :y)))]
+                           [(math/floor (+ (from :x)))
+                            (math/floor (+ (from :y)))])
+                         0.2)))
+                (v/v+
+                  [(math/floor (+ (from :x)))
+                   (math/floor (+ (* 64 0.75) (from :y)))]
+                  (map math/floor
+                       (v/v*
+                         (v/v-
+                           [(math/floor (+ (to :x)))
+                            (math/floor (+ (to :y)))]
+                           [(math/floor (+ (from :x)))
+                            (math/floor (+ (from :y)))])
+                         0.8)))
+                10
+                0x000000aa))

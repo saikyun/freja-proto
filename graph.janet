@@ -25,7 +25,8 @@
   (find-nodes* f t @[]))
 
 (defn find-named
-  [name t]
+  [name &opt t]
+  (default t s/gos)
   (find-nodes |(= name (in $ :name)) t))
 
 (comment
