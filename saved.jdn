@@ -1178,7 +1178,20 @@
           :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
           :tile-pos (3 5)
           :z 0}
-        @{:children @[]
+        @{:children @[@{:brightness 0.15
+              :children @[]
+              :editor-state @{}
+              :h 50
+              :name "Gunpriest"
+              :offset [-4 -7]
+              :on-event @{:freja/func true :name "player" :source "renders.janet"}
+              :render @{:freja/func true :name "texture" :source "renders.janet"}
+              :render-x 127.923
+              :render-y 225
+              :texture :gunpriest
+              :w 50
+              :x 127.923
+              :y 225}]
           :color (0.4 0.2 0.4 0.15)
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
@@ -1532,6 +1545,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -1642,6 +1656,7 @@
           :z 4}
         @{:children @[]
           :color (0.8 0.6 0.8 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -1680,20 +1695,7 @@
           :render @{:freja/func true :name "draw-hexa" :source "renders.janet"}
           :tile-pos (11 7)
           :z 2}
-        @{:children @[@{:brightness 0.15
-              :children @[]
-              :editor-state @{}
-              :h 50
-              :name "Gunpriest"
-              :offset [-4 -7]
-              :on-event @{:freja/func true :name "player" :source "renders.janet"}
-              :render @{:freja/func true :name "texture" :source "renders.janet"}
-              :render-x 294.2
-              :render-y 250.92
-              :texture :gunpriest
-              :w 50
-              :x 294.2
-              :y 250.92}]
+        @{:children @[]
           :color (0.6 0.4 0.6 0.15)
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
@@ -1765,6 +1767,7 @@
           :z 2}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2228,6 +2231,7 @@
           :z 2}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2258,6 +2262,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2478,6 +2483,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2628,6 +2634,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.279171)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2868,6 +2875,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.925255)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2888,6 +2896,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.925255)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2898,6 +2907,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2918,6 +2928,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -2938,6 +2949,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -3028,6 +3040,7 @@
           :z 6}
         @{:children @[]
           :color (0.4 0.2 0.4 0.65)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -3048,6 +3061,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.65)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -3128,6 +3142,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -3138,6 +3153,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -3358,6 +3374,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"
@@ -3388,6 +3405,7 @@
           :z 0}
         @{:children @[]
           :color (0.4 0.2 0.4 0.15)
+          :editor-state @{}
           :height 18.72
           :hover-color @{:freja/func true :name "hover-color" :source "genwo.janet"}
           :name "Tile"

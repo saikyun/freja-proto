@@ -20,8 +20,18 @@
   (when (self :on-event)
     (:on-event self ev)))
 
+(defn do-queue
+  []
+  (loop [f-call :in s/queue]
+    ((first f-call) ;(drop 1 f-call)))
+
+  (array/clear s/queue))
+
 (defn tick-all
   [el]
+
+  (do-queue)
+
   (def mp
     (v/v-
       (get-mouse-position)

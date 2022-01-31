@@ -291,8 +291,14 @@
     [:key-down :e]
     (qp move self [1 -1])
 
-    [:key-down :w]
+    [:key-down :q]
     (qp move self [-1 -1])
+
+    [:key-down :w123]
+    (qp move self [-1 -1])
+
+    [:key-down :s123]
+    (qp move self [-2 0])
 
     [:key-down :a]
     (qp move self [-2 0])
@@ -303,7 +309,10 @@
     [:key-down :z]
     (qp move self [-1 1])
 
-    [:key-down :x]
+    [:key-down :x123]
+    (qp move self [-1 1])
+
+    [:key-down :c]
     (qp move self [1 1])))
 
 (defn player
