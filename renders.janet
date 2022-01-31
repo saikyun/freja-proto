@@ -1,4 +1,5 @@
 (use freja/flow)
+(import freja/events :as e)
 (import ./state :as s)
 (import ./graph :as g)
 (use ./assets)
@@ -49,7 +50,7 @@
   (defer (rl-pop-matrix)
     (rl-push-matrix)
 
-    (rl-scalef 1 0.5 1)
+    (rl-scalef 1 s/height-scale 1)
 
     (loop [i :range [0 (inc z)]]
       (draw-poly (v/v+ p [0 (* height i)]) 6 radius 0 [0.1 0.2 0.2]))
@@ -195,7 +196,7 @@
   (var n nil)
 
   (def p @[;p])
-  (update p 1 * 2)
+  (update p 1 * (/ 1 s/height-scale))
 
   (loop [c :in hexas
          :let [dist (min (v/dist (c :pos) p)
@@ -216,6 +217,17 @@
         (set d dist)
         (set n c))))
   n)
+
+(defn move-to-tile
+  [self tile]
+  (def {:pos p :color c} tile)
+  (g/set-parent self tile)
+  (put self :brightness (c 3))
+  (def [nx ny] p)
+  (def ny (+ (* s/height-scale ny) (* (get tile :z 0) s/height-scale (tile :height) -1)))
+  (-> self
+      (put :x nx)
+      (put :y ny)))
 
 (defn snap-drag
   [self ev]
@@ -238,13 +250,8 @@
       (when (= (s/state :dragged-go) self)
         (let [world (first (g/find-named "World" s/gos))
               tile (hexa-hit (world :children) pos)]
-          (when-let [{:pos p :color c} tile]
-            (put self :brightness (c 3))
-            (def [nx ny] p)
-            (def ny (+ (* 0.5 ny) (* (get tile :z 0) 0.5 (tile :height) -1)))
-            (-> self
-                (put :x nx)
-                (put :y ny)))))
+          (when tile
+            (move-to-tile self tile))))
 
       [:release _]
       (when (= (s/state :dragged-go) self)
@@ -254,6 +261,55 @@
 
     # take code from other drag thing
 ))
+
+(defn ->tile
+  [world [x y]]
+  (get (world :children) (+ (* y (world :world-width))
+                            (/ (- x (mod y 2)) 2))))
+
+(defn move
+  [self delta]
+  (let [world (first (g/find-named "World"))
+        grid (world :children)
+        pos (get-in self [:parent :tile-pos])
+        new-pos (v/v+ pos delta)
+        new-tile (->tile world new-pos)]
+    (if-not new-tile
+      (printf "No tile at: %p" new-pos)
+      (do
+        (printf "Moved to: %p = %p" new-pos (new-tile :tile-pos))
+        (move-to-tile self new-tile)))))
+
+(defn qp
+  [& args]
+  (array/push s/queue args))
+
+(defn walk-with-keys
+  [self ev]
+  (print "walk with keys")
+  (match ev
+    [:key-down :e]
+    (qp move self [1 -1])
+
+    [:key-down :w]
+    (qp move self [-1 -1])
+
+    [:key-down :a]
+    (qp move self [-2 0])
+
+    [:key-down :d]
+    (qp move self [2 0])
+
+    [:key-down :z]
+    (qp move self [-1 1])
+
+    [:key-down :x]
+    (qp move self [1 1])))
+
+(defn player
+  [self ev]
+  (snap-drag self ev)
+  (walk-with-keys self ev))
 
 (defn hover
   [self ev]
@@ -288,9 +344,9 @@
              (ev 1)))
 
   (match ev
-    [:press-LULE _]
-    (when (in-rec? self pos)
-      (put s/state :selected self))
+    [:press _]
+    (do (def hexa (hexa-hit (self :children) pos))
+      (e/put! s/state :selected hexa))
 
     [:mouse-move [x y]]
     (do (when-let [s (self :hover)]

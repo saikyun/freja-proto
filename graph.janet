@@ -4,10 +4,10 @@
 
 (defn map-tree
   [f t]
+  (f t)
   (when-let [cs (in t :children)]
     (loop [c :in cs]
-      (map-tree f c)))
-  (f t))
+      (map-tree f c))))
 
 (defn find-nodes*
   [f t res]
@@ -47,8 +47,16 @@
 
     false))
 
+(defn add-child
+  [parent child]
+  (update parent :children array/push child)
+  (put child :parent parent))
+
+(varfn set-parent [node new-parent])
+
 (defn remove-child
   [parent child]
+  (map (partial add-child s/gos) (child :children))
   (update parent :children |(filter |(not= $ child) $)))
 
 (defn delete
@@ -57,10 +65,9 @@
     (printf "Child %m has no parent." child)
     (remove-child (child :parent) child)))
 
-(defn add-child
-  [parent child]
-  (update parent :children array/push child)
-  (put child :parent parent))
+(defn delete-children
+  [parent]
+  (map delete (array ;(parent :children))))
 
 (defn set-parent
   [node new-parent]

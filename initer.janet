@@ -27,7 +27,13 @@
       (get-mouse-position)
       [(el :render-x) (el :render-y)]))
 
-  (g/map-tree render-self s/gos)
+  (def player (first (g/find-named "Gunpriest")))
+
+  (defer (rl-pop-matrix)
+    (rl-push-matrix)
+    #(rl-translatef (- (* 1 (player :render-x))) 0 0)
+    #(rl-scalef 1.5 1.5 1)
+    (g/map-tree render-self s/gos))
 
   (when (s/state :dragged)
     (def [w h] (measure-text ((s/state :dragged) :name) :font :sans-serif))
@@ -59,6 +65,9 @@
       [kind (ev 1) (v/v- (ev 2) [(dyn :offset-x)
                                  (dyn :offset-y)])
        ;(drop 3 ev)]
+
+      (= kind :key-down)
+      ev
 
       nil))
 

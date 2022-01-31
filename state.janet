@@ -13,3 +13,7 @@
   @{:freja/label "Editor"
     :root gos
     :expanded @{}})
+
+(def height-scale 0.75)
+
+(def queue @[])

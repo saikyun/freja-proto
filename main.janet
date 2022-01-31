@@ -4,6 +4,7 @@
 (import freja/open-file)
 (import ./state :as s)
 (import ./renders)
+(import ./genwo)
 (import ./wrap)
 (import ./navigation :as nav)
 (import ./initial-gos)
@@ -73,11 +74,16 @@
                         (let [{:source source
                                :name name} v
                               env (require source)]
-                          (assert (get env (symbol name))
-                                  (string/format
-                                    ``could not find function: %m
+                          (try
+                            (do
+                              (assert (get env (symbol name))
+                                      (string/format
+                                        ``could not find function: %m
 in env with keys: %m`` v env))
-                          (wrap/funf (symbol name) :env env))
+                              (wrap/funf (symbol name) :env env))
+                            ([err fib]
+                              (debug/stacktrace fib err)
+                              nil)))
 
                         v)]]
           [k v])
