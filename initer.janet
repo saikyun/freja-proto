@@ -9,6 +9,7 @@
 (import ./wrap)
 (import ./renders)
 (import freja/input)
+(import ./timer)
 
 (defn render-self
   [self]
@@ -22,13 +23,39 @@
 
 (defn do-queue
   []
-  (loop [f-call :in s/queue]
-    ((first f-call) ;(drop 1 f-call)))
+  (try
+    (loop [f-call :in s/queue]
+      ((first f-call) ;(drop 1 f-call)))
+    ([err fib]
+      (debug/stacktrace fib err)))
 
   (array/clear s/queue))
 
+(var player nil)
+(def camera-offset @[0 0])
+(var rt nil)
+
 (defn tick-all
   [el]
+  (def {:width rw :height rh} el)
+
+  (when (and rt
+             (or (not= rw (in rt :w))
+                 (not= rh (in rt :h))))
+    (when-let [t (rt :t)]
+      (unload-render-texture t))
+    (set rt nil))
+
+  (unless rt
+    (set rt {:t (load-render-texture rw rh)
+             :w rw
+             :h rh}))
+
+  (unless player
+    (set player (first (g/find-named "Gunpriest"))))
+
+  (put camera-offset 0 (- (* rw 0.5) (player :render-x) (* 0.5 (player :w))))
+  (put camera-offset 1 (- (* rh 0.5) (player :render-y) (* 0.5 (player :h))))
 
   (do-queue)
 
@@ -37,13 +64,35 @@
       (get-mouse-position)
       [(el :render-x) (el :render-y)]))
 
-  (def player (first (g/find-named "Gunpriest")))
+  (rl-pop-matrix)
+  (rl-pop-matrix)
+  (rl-pop-matrix)
 
-  (defer (rl-pop-matrix)
-    (rl-push-matrix)
-    #(rl-translatef (- (* 1 (player :render-x))) 0 0)
-    #(rl-scalef 1.5 1.5 1)
-    (g/map-tree render-self s/gos))
+  (defer (end-texture-mode)
+    (begin-texture-mode (in rt :t))
+    (clear-background :blank)
+    (defer (rl-pop-matrix)
+      (rl-push-matrix)
+      (rl-translatef ;camera-offset 0)
+      #(rl-scalef 1.5 1.5 1)
+      (g/map-tree render-self s/gos)))
+
+  (rl-push-matrix)
+  (rl-push-matrix)
+
+  (rl-translatef (el :render-x)
+                 (el :render-y)
+                 0)
+
+  (rl-push-matrix)
+
+  (draw-texture-pro
+    (get-render-texture (in rt :t))
+    [0 0 (in rt :w) (- (in rt :h))]
+    [0 0 (in rt :w) (in rt :h)]
+    [0 0]
+    0
+    :white)
 
   (when (s/state :dragged)
     (def [w h] (measure-text ((s/state :dragged) :name) :font :sans-serif))
@@ -59,6 +108,7 @@
 (defn on-event
   [ev]
   (def kind (first ev))
+
   (def new-ev
     (cond
       (or (= kind :press)
@@ -67,8 +117,10 @@
           (= kind :release)
           (= kind :double-click)
           (= kind :triple-click))
-      [kind (v/v- (ev 1) [(dyn :offset-x)
-                          (dyn :offset-y)])
+      [kind (-> (ev 1)
+                (v/v- [(dyn :offset-x)
+                       (dyn :offset-y)])
+                (v/v- camera-offset))
        ;(drop 2 ev)]
 
       (or (= kind :scroll))
@@ -327,32 +379,38 @@
         :selected selected} props)
   [:background {:color border}
    [:padding {:left 2}
-    [:event-handler {:on-event (fn [_ ev]
-                                 (match ev
-                                   [:release _]
-                                   (when (s/state :dragged)
-                                     (print "top")
-                                     (put s/state :dragged nil)
-                                     (put s/state :target nil)
-                                     false)))}
-     [:background {:color bg}
-      [:padding {:all 6}
-       [:block {}
-        [:row {}
-         [:block {}
-          [node-item {:node root :expanded expanded :selected selected}]]
-         (when selected
-           (unless (selected :editor-state)
-             (put selected
-                  :editor-state
-                  @{}))
-           [:block {}
-            [:padding {:left 12}
-             [editor-window selected]]])]]]]]
-
-    [:background {:color scene-bg}
+    [:column {}
      [:block {}
-      [custom {:render tick-all
-               :on-event on-event}]]]]])
+      [:block {:height 300}
+       [:event-handler
+        {:on-event (fn [_ ev]
+                     (match ev
+                       [:release _]
+                       (when (s/state :dragged)
+                         (print "top")
+                         (put s/state :dragged nil)
+                         (put s/state :target nil)
+                         false)))}
+        [:background {:color bg}
+         [timer/timer timer/state]
+         [:padding {:all 6}
+          [:block {}
+           [:row {}
+            [:block {}
+             [node-item {:node root :expanded expanded :selected selected}]]
+            (when selected
+              (unless (selected :editor-state)
+                (put selected
+                     :editor-state
+                     @{}))
+              [:block {}
+               [:padding {:left 12}
+                [editor-window selected]]])]]]]]]]
+
+     [:block {:weight 1}
+      [:background {:color scene-bg}
+       [:block {}
+        [custom {:render tick-all
+                 :on-event on-event}]]]]]]])
 
 (e/put! state/editor-state :other [component s/state])

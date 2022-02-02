@@ -10,7 +10,7 @@
 (import ./initial-gos)
 
 (comment
-  (func->file-line-col func->file-line-col)
+  (func->file-line-col func->file-line-col)aå
 
   (-> (seq [[k v] :pairs form
             :let [v (if (function? v)

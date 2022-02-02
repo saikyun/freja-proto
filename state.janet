@@ -14,6 +14,6 @@
     :root gos
     :expanded @{}})
 
-(def height-scale 0.75)
+(def height-scale 0.6)
 
 (def queue @[])
