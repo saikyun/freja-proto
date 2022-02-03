@@ -14,6 +14,20 @@
     :root gos
     :expanded @{}})
 
+(def anims @[])
+
+(defmacro anim
+  [& body]
+  ~(array/push ',anims
+               (fiber/new (fn [] ,;body))))
+
+(comment
+  # (macex '(anim 123))
+  #
+)
+
+(def number-of-turns 3)
+
 (def height-scale 0.6)
 
 (def queue @[])

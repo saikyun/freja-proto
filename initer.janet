@@ -54,8 +54,9 @@
   (unless player
     (set player (first (g/find-named "Gunpriest"))))
 
-  (put camera-offset 0 (- (* rw 0.5) (player :render-x) (* 0.5 (player :w))))
-  (put camera-offset 1 (- (* rh 0.5) (player :render-y) (* 0.5 (player :h))))
+  (when player
+    (put camera-offset 0 (- (* rw 0.5) (player :render-x) (* 0.5 (player :w))))
+    (put camera-offset 1 (- (* rh 0.5) (player :render-y) (* 0.5 (player :h)))))
 
   (do-queue)
 
@@ -75,15 +76,20 @@
       (rl-push-matrix)
       (rl-translatef ;camera-offset 0)
       #(rl-scalef 1.5 1.5 1)
-      (g/map-tree render-self s/gos)))
+      (g/map-tree render-self s/gos)
+
+      (loop [f :in s/anims
+             :when (fiber/can-resume? f)]
+        (resume f))))
 
   (rl-push-matrix)
-  (rl-push-matrix)
-
   (rl-translatef (el :render-x)
-                 (el :render-y)
+                 54
                  0)
-
+  (rl-push-matrix)
+  (rl-translatef 0
+                 (- (el :render-y) 54)
+                 0)
   (rl-push-matrix)
 
   (draw-texture-pro
@@ -103,38 +109,62 @@
       ((s/state :dragged) :name)
       (v/v+ p [2 2])
       :font :sans-serif
-      :color [0.9 0.9 0.9])))
+      :color [0.9 0.9 0.9]))
+
+  (var i 0)
+  (while (and (< i (length s/anims)))
+    (if (fiber/can-resume? (in s/anims i))
+      (++ i)
+      (array/remove s/anims i))))
+
+(defn in-rec?
+  [rec [px py]]
+  (def {:render-x x :render-y y :height h :width w} rec)
+
+  (and
+    (>= px x)
+    (<= px (+ x w))
+    (>= py y)
+    (<= py (+ y h))))
 
 (defn on-event
-  [ev]
+  [self ev]
   (def kind (first ev))
 
-  (def new-ev
-    (cond
-      (or (= kind :press)
-          (= kind :mouse-move)
-          (= kind :drag)
-          (= kind :release)
-          (= kind :double-click)
-          (= kind :triple-click))
-      [kind (-> (ev 1)
-                (v/v- [(dyn :offset-x)
-                       (dyn :offset-y)])
-                (v/v- camera-offset))
-       ;(drop 2 ev)]
+  (def pos
+    (when (= kind :press)
+      (ev 1)))
 
-      (or (= kind :scroll))
-      [kind (ev 1) (v/v- (ev 2) [(dyn :offset-x)
-                                 (dyn :offset-y)])
-       ;(drop 3 ev)]
+  (when (or (not pos)
+            (in-rec? self pos))
 
-      (= kind :key-down)
-      ev
+    (def new-ev
+      (cond
+        (or (= kind :press)
+            (= kind :mouse-move)
+            (= kind :drag)
+            (= kind :release)
+            (= kind :double-click)
+            (= kind :triple-click))
+        [kind (-> (ev 1)
+                  (v/v- [(dyn :offset-x)
+                         (dyn :offset-y)])
+                  (v/v- camera-offset))
+         ;(drop 2 ev)]
 
-      nil))
+        (or (= kind :scroll))
+        [kind (ev 1) (v/v- (ev 2) [(dyn :offset-x)
+                                   (dyn :offset-y)])
+         ;(drop 3 ev)]
 
-  (when new-ev
-    (g/map-tree |(on-event-self $ new-ev) s/gos)))
+        (or (= kind :key-repeat)
+            (= kind :key-down))
+        ev
+
+        nil))
+
+    (when new-ev
+      (g/map-tree |(on-event-self $ new-ev) s/gos))))
 
 (def text-size 24)
 (def text-color [0.9 0.9 0.9])
@@ -185,7 +215,7 @@
                   :expanded expanded
                   :selected selected}])
 
-   [:block {:width 300}
+   [:block {:width 200}
     [:padding {:bottom 16}
      [field {:label "Add"
              :on-enter (fn [label]
@@ -235,8 +265,14 @@
     [:block {}
      [:event-handler {:on-event
                       (fn [el ev]
-                        #(pp ev)
                         (match ev
+                          [:scroll amount]
+                          (do
+                            (if (neg? amount)
+                              (update-in s/state [:selected :scroll] |(inc (or $ 0)))
+                              (update-in s/state [:selected :scroll] |(max 0 (dec (or $ 0)))))
+                            (s/force-refresh!))
+
                           [:press pos]
                           (when (in-el? el pos)
                             (put s/state :dragged node)
@@ -351,7 +387,7 @@
 
 (defn editor-window
   [node]
-  (let [elems (seq [[k v] :pairs node
+  (let [elems (seq [[k v] :in (drop (get node :scroll 0) (pairs node))
                     :when (not (ignored k))]
                 [[:block {:height (+ 2 text-size)}
                   [:text {:size text-size
@@ -380,6 +416,11 @@
   [:background {:color border}
    [:padding {:left 2}
     [:column {}
+     [:block {:weight 1}
+      [:background {:color scene-bg}
+       [:block {}
+        [custom {:render tick-all
+                 :on-event on-event}]]]]
      [:block {}
       [:block {:height 300}
        [:event-handler
@@ -392,25 +433,28 @@
                          (put s/state :target nil)
                          false)))}
         [:background {:color bg}
-         [timer/timer timer/state]
-         [:padding {:all 6}
-          [:block {}
-           [:row {}
-            [:block {}
-             [node-item {:node root :expanded expanded :selected selected}]]
-            (when selected
-              (unless (selected :editor-state)
-                (put selected
-                     :editor-state
-                     @{}))
-              [:block {}
-               [:padding {:left 12}
-                [editor-window selected]]])]]]]]]]
+         [:row {}
+          [:padding {:weight 1
+                     :all 6}
+           [:block {}
+            [:row {}
+             [:block {}
+              [node-item {:node root :expanded expanded :selected selected}]]
+             (when selected
+               (unless (selected :editor-state)
+                 (put selected
+                      :editor-state
+                      @{}))
+               [:block {}
+                [:padding {:left 12}
+                 [editor-window selected]]])]]]
 
-     [:block {:weight 1}
-      [:background {:color scene-bg}
-       [:block {}
-        [custom {:render tick-all
-                 :on-event on-event}]]]]]]])
+          [:block {}
+           [timer/timer timer/state]
+           [:text {:color [0.85 0.85 0.85]
+                   :size 35
+                   :text  "Mimic the feeling of being found and chased"
+                   # "Act as new player, just play"
+}]]]]]]]]]])
 
 (e/put! state/editor-state :other [component s/state])

@@ -10,7 +10,7 @@
 (import ./initial-gos)
 
 (comment
-  (func->file-line-col func->file-line-col)aå
+  (func->file-line-col func->file-line-col)
 
   (-> (seq [[k v] :pairs form
             :let [v (if (function? v)
@@ -99,10 +99,7 @@ in env with keys: %m`` v env))
        parse
        load-traverse))
 
-(put s/state :freja/quit (fn [data]
-                           (persist)
-                           (pp data)
-                           (print "lul")))
+(put s/state :freja/quit (fn [data] (persist)))
 
 (defn bigload
   []

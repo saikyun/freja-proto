@@ -1,0 +1,53 @@
+observation: it was super boring
+why:
+- perfect information
+  -> too easy
+- too little to do
+
+
+
+
+
+solution:
+- perfect information
+  -> randomness
+    -> where they walk
+    -> chance to notice me
+  -> add more mechanics which interact with each other
+    -> brightness
+
+
+
+- one could add exploration
+
+NEXT STEP:
+- make glutton person walk to the study sometimes
+
+- the glutton walks between:
+  - kitchen
+  - study
+  - toilet
+
+observation: immediately more exciting -- it could be more exciting
+but when being found, it was very boring
+why:
+- no choice when moving, just ran to ladder
+  -> no planning
+  - both have same movement speed all the time
+- when being seen, 0 tension to max tension
+
+
+
+
+solution:
+- fight or flee
+- sneak / running
+- step wise danger increase
+  - safe mode
+  - hear something
+    -> cautious / observative
+  - see player
+    -> chase mode
+  - lost sight of player
+    -> active search mode
+- re-hiding

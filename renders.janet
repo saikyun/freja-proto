@@ -1,7 +1,9 @@
 (use freja/flow)
 (import freja/events :as e)
+(import freja/state)
 (import ./state :as s)
 (import ./graph :as g)
+(import ./wrap)
 (use ./assets)
 
 (defn draw-cat
@@ -262,10 +264,169 @@
     # take code from other drag thing
 ))
 
+
 (defn ->tile
   [world [x y]]
   (get (world :children) (+ (* y (world :world-width))
                             (/ (- x (mod y 2)) 2))))
+
+
+(defn record
+  [self ev]
+  (snap-drag self ev)
+  (when (and (= self (s/state :selected))
+             (= 1 (self :recording))
+             (and (= :key-down (first ev))
+                  (= :r (get ev 1))))
+    (update self :record
+            (fn [rec]
+              (default rec @[])
+              (array/push rec (get-in self [:parent :tile-pos]))))))
+
+(defn say
+  [self text]
+  (s/anim
+    (loop [_ :range [0 (* 2 60)]]
+      (draw-text text
+                 [(+ (self :render-x) #(* 0.5 (self :w))
+)
+                  (- (self :render-y) (* 0.8 (self :h)))]
+                 :center true
+                 :color :white
+                 :font :serif)
+      (yield))))
+
+
+(defn say-nom-nom
+  [self]
+  (say self "Nom nom nom!"))
+
+(defn cook-need-more
+  [self]
+  (say self "I'm out of cardamom..."))
+
+(defn cook-sing
+  [self]
+  (say self "Little, little hen -- eggs bring me zen"))
+
+(comment
+  (say-nom-nom (s/state :selected))
+
+  (def old-record [;(get-in s/state [:selected :record])])
+  (put-in s/state [:selected :record] [[12 12] (wrap/fun say-nom-nom)])
+  s/anims
+
+  (let [{:playback i :record r} (s/state :selected)]
+    (array/insert r i (wrap/fun cook-need-more)))
+
+  (let [{:record r} (s/state :selected)]
+    (array/push r (wrap/fun cook-need-more)))
+
+  (let [{:record r} (s/state :selected)]
+    (array/push r (wrap/fun cook-sing)))
+
+  (let [{:playback i :record r} (s/state :selected)]
+    (array/insert r i (wrap/fun say-nom-nom)))
+  (array/insert r i |(say $ "Nom nom nom!"))
+  (array/remove r i)
+  (put r i |(say $ "Nom nom nom..."))
+
+  (def s (s/state :selected))
+  (put s :available-recordings nil)
+
+  (get-in s
+          [:available-paths 1])
+
+  (put s :available-paths
+       @[[:kitchen :toilet (s :kitchen->toilet)]
+         [:kitchen :study (s :kitchen->study)]
+         [:study :kitchen (s :study->kitchen)]
+         [:study :toilet (s :study->toilet)]
+         [:toilet :study (s :toilet->study)]
+         [:toilet :kitchen (s :toilet->kitchen)]])
+
+  (doc array/insert)
+
+  #
+)
+
+(defn playback
+  [self ev]
+  (update self :playback |(or $ 0))
+
+  (record self ev)
+
+  (defn move
+    []
+    (ev/spawn
+      (loop [_ :range [0 s/number-of-turns]]
+        (def {:available-paths paths
+              :active-path-i ai
+              :current-position currp} self)
+
+        (when (and (not (nil? ai))
+                   (>= (self :playback)
+                       (length (get-in paths [ai 2]))))
+          (put self :current-position (get-in paths [ai 1]))
+          (put self :active-path-i nil)
+          (put self :playback 0))
+
+        (def {:available-paths paths
+              :active-path-i ai
+              :current-position currp} self)
+
+        (when (nil? (self :active-path-i))
+          (default currp :kitchen)
+
+          (def ai (cond ai
+                    ai
+
+                    (= 1 (length paths))
+                    0
+
+                    (do
+                      (var i nil)
+                      (while (not= (get-in paths [i 0])
+                                   currp)
+                        (set i (math/floor (* (length paths) (math/random)))))
+                      i)))
+
+          (put self :active-path-i ai))
+
+        (def {:available-paths paths
+              :active-path-i ai
+              :current-position currp} self)
+
+        (def [start-pos end-pos path] (get paths ai))
+        # [:kitchen :study <recording>]
+
+        (def step (get path (self :playback)))
+
+        (def to-call (cond (keyword? step)
+                       [say-nom-nom self]
+
+                       (function? step)
+                       [step self]
+
+                       (when-let [new-tile (->tile (first (g/find-named "World"))
+                                                   step)]
+                         [(fn []
+                            (move-to-tile self new-tile)
+                            (put self :tile-pos (new-tile :tile-pos))
+                            (e/put! state/editor-state :force-refresh true))])))
+
+        (when to-call (array/push s/queue to-call))
+
+        (update self :playback inc)
+
+        (ev/sleep 0.35))))
+
+  (match ev
+    [:key-down :space]
+    (move)
+
+    [:key-repeat :space]
+    (move)))
 
 (defn move
   [self delta]
@@ -286,7 +447,6 @@
 
 (defn walk-with-keys
   [self ev]
-  (print "walk with keys")
   (match ev
     [:key-down :e]
     (qp move self [1 -1])
