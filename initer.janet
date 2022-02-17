@@ -131,6 +131,9 @@
   [self ev]
   (def kind (first ev))
 
+  (when (deep= ev @[:key-release :j])
+    (print (inc (math/floor (* 6 (math/random))))))
+
   (def pos
     (when (= kind :press)
       (ev 1)))
@@ -453,8 +456,7 @@
            [timer/timer timer/state]
            [:text {:color [0.85 0.85 0.85]
                    :size 35
-                   :text  "Mimic the feeling of being found and chased"
-                   # "Act as new player, just play"
-}]]]]]]]]]])
+                   :text # "Mimic the feeling of being found and chased"
+                   "Act as new player, just play"}]]]]]]]]]])
 
 (e/put! state/editor-state :other [component s/state])

@@ -34,6 +34,115 @@
       hover-color
       color)))
 
+(defn doublewidth->axial
+  [[x y]]
+  (let [q (* 0.5 (- x y))
+        r y]
+    [q r]))
+
+(defn axial->doublewidth
+  [[q r]]
+  (let [x (+ (* 2 q) r)
+        y r]
+    [x y]))
+
+(defn axial-distance
+  [[q1 r1] [q2 r2]]
+  (* 0.5
+     (+ (math/abs (- q1 q2))
+        (math/abs (- (+ q1 r1) (+ q2 r2)))
+        (math/abs (- r1 r2)))))
+
+(defn axial-ring
+  [[q1 r1] d]
+  (seq [q :range-to [(- q1 d) (+ q1 d)]
+        r :range-to [(- r1 d) (+ r1 d)]
+        :when (= d (axial-distance [q1 r1] [q r]))]
+    [q r]))
+
+(defn lerp
+  [n1 n2 t]
+  (+ n1 (* t (- n2 n1))))
+
+(defn v/lerp
+  [v1 v2 t]
+  (map |(lerp $0 $1 t) v1 v2))
+
+(defn axial-round
+  [[fq fr]]
+  (let [fs (+ (- fq) (- fr))
+        q (math/round fq)
+        r (math/round fr)
+        s (math/round fs)
+
+        q-diff (math/abs (- fq q))
+        r-diff (math/abs (- fr r))
+        s-diff (math/abs (- fs s))]
+
+    (cond (or (> q-diff r-diff)
+              (> q-diff s-diff))
+      [(+ (- r) (- s)) r]
+
+      (> r-diff s-diff)
+      [q (+ (- q) (- s))]
+
+      [q r # (+ (- q) (- r))
+])))
+
+(defn axial-line
+  [v1 v2]
+  (let [n (axial-distance v1 v2)]
+    (seq [i :range-to [0 n]]
+      (-> (v/lerp v1 v2 (* (/ 1 n) i))
+          axial-round))))
+
+(defn dw-line
+  [v1 v2]
+  (->> (axial-line (doublewidth->axial v1)
+                   (doublewidth->axial v2))
+       (map axial->doublewidth)))
+
+(var [pc] (g/find-named "Gunpriest"))
+
+(def visible-hexas @{})
+
+(comment
+  (v/lerp [1 1] [2 2] 0.5)
+  #=> @[1.5 1.5]
+
+  (axial-distance (doublewidth->axial [0 0]) (doublewidth->axial [13 7]))
+
+  (axial-distance (doublewidth->axial [0 0]) (doublewidth->axial [15 5]))
+
+  (map |(put (tracev (->tile (first (g/find-named "World" s/gos))
+                             (tracev (axial->doublewidth $)))) :hover true)
+       (axial-ring (doublewidth->axial (pc :tile-pos))
+                   3))
+
+  (axial-line (doublewidth->axial (pc :tile-pos))
+              (doublewidth->axial (get-in s/state [:selected :tile-pos])))
+
+  (do
+    (table/clear visible-hexas)
+    (loop [line :in
+           (map |(axial-line (doublewidth->axial (pc :tile-pos))
+                             $)
+                (axial-ring (doublewidth->axial (pc :tile-pos))
+                            3))]
+      (loop [t :in line
+             :let [tile (->tile (first (g/find-named "World" s/gos))
+                                (axial->doublewidth t))]]
+        (if (pos? (tile :z))
+          (break)
+          (put visible-hexas tile true)))))
+
+  (map |(put (tracev (->tile (first (g/find-named "World" s/gos)) (tracev $))) :hover true)
+       (dw-line (pc :tile-pos)
+                (get-in s/state [:selected :tile-pos])))
+  #
+)
+
+
 (defn draw-hexa
   [self]
   (def {:pos p
@@ -61,6 +170,20 @@
                                      (if (= 3 (length color))
                                        [;color 0.7]
                                        color)))
+    (rl-pop-matrix)
+
+    (rl-push-matrix)
+    (rl-scalef 1 s/height-scale 1)
+    (comment when pc
+             (draw-text (string/format "%p\n%p"
+                                       (doublewidth->axial tile-pos)
+                                       (axial->doublewidth (doublewidth->axial tile-pos)))
+                        #(axial-distance
+                        #  (doublewidth->axial (pc :tile-pos))
+                        #  (doublewidth->axial tile-pos))
+                        (v/v+ p [-18 -30]) :color :white
+                        :size 20))
+
     #  (draw-poly p 6 (- radius 1) 0 (if hover
     #                                  hover-color
     #                                  color))
@@ -227,6 +350,7 @@
   (put self :brightness (c 3))
   (def [nx ny] p)
   (def ny (+ (* s/height-scale ny) (* (get tile :z 0) s/height-scale (tile :height) -1)))
+  (put self :tile-pos (tile :tile-pos))
   (-> self
       (put :x nx)
       (put :y ny)))
@@ -267,8 +391,8 @@
 
 (defn ->tile
   [world [x y]]
-  (get (world :children) (+ (* y (world :world-width))
-                            (/ (- x (mod y 2)) 2))))
+  (get (world :children) (tracev (+ (* y (world :world-width))
+                                    (/ (- x (mod y 2)) 2)))))
 
 
 (defn record
@@ -336,6 +460,10 @@
 
   (get-in s
           [:available-paths 1])
+
+  (def paths (apply tuple (get s :available-paths)))
+
+  (put (s/state :selected) :available-paths paths)
 
   (put s :available-paths
        @[[:kitchen :toilet (s :kitchen->toilet)]

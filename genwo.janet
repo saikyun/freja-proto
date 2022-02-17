@@ -101,12 +101,33 @@
                         tile)]]
       (new-tile x y tile world))
 
-    (def lights [{:pos [10 4 1]
+    (def lights [{:pos [26 12 1]
                   :range 5
-                  :strength 0.5}
-                 {:pos [5 11 1]
+                  :strength 0.3}
+                 {:pos [38 4 1]
+                  :range 5
+                  :strength 0.3}
+                 {:pos [12 12 1]
                   :range 4
                   :strength 0.5}
+                 {:pos [38 16 1]
+                  :range 5
+                  :strength 0.5}
+                 {:pos [6 12 1]
+                  :range 4
+                  :strength 0.5}
+                 {:pos [5 8 1]
+                  :range 4
+                  :strength 0.5}
+                 {:pos [12 2 1]
+                  :range 4
+                  :strength 0.5}
+                 {:pos [20 2 1]
+                  :range 3
+                  :strength 0.4}
+                 {:pos [28 2 1]
+                  :range 3
+                  :strength 0.4}
                  {:pos [18 13 1]
                   :range 4
                   :strength 0.5}])

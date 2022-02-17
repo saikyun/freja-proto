@@ -9,6 +9,54 @@
 (import ./navigation :as nav)
 (import ./initial-gos)
 
+
+#
+#
+#
+#
+#
+#
+#
+#
+
+# DARK    = 2 range
+# PARTIAL = 4 range
+# BRIGHT  = 6 range
+
+# RUN     = +2 range & +1 diff
+# SNEAK   = +0 range
+# STAND   = -2 range & -1 diff
+
+# SEE BRIGHT  = 2+
+# SEE PARTIAL = 3+
+# SEE DARK    = 5+
+
+# could stand still and see all paths
+# nothing happened while waiting
+# "generic stealth"
+# did not try to use run
+
+# sla folk i huvudet ??
+
+
+
+#
+#
+#
+#
+#
+#
+#
+
+
+
+
+
+
+
+(global-set-key [:control :q] (fn [_]
+                                (print (inc (math/floor (* 6 (math/random)))))))
+
 (comment
   (func->file-line-col func->file-line-col)
 

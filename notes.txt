@@ -1,3 +1,26 @@
+# Progress
+
+- made paper prototype of combat system
+  - works OK
+
+- made paper protoype of stealth
+  - evoked emotions of tension and fear
+- implementing
+  1.
+  - design a map
+  - have enemies walk around
+  - try to see where they go
+  2.
+  - adding randomness to how they walked
+
+
+
+
+
+
+---
+
+
 observation: it was super boring
 why:
 - perfect information
@@ -15,8 +38,6 @@ solution:
     -> chance to notice me
   -> add more mechanics which interact with each other
     -> brightness
-
-
 
 - one could add exploration
 
@@ -51,3 +72,68 @@ solution:
   - lost sight of player
     -> active search mode
 - re-hiding
+
+
+
+
+
+
+
+----
+
+
+TRYING: both brightness & random walking around
+feeling like I have no control
+not much planning
+- a little bit by choosing to go in the dark or not
+
+Problems:
+1. too easy to immediately lose
+  - die roll for live / die feels too harsh
+2. stretches where it doesn't feel exciting
+3. too random walking around
+4. too little control / few options
+
+
+Solutions:
+
+1. - elevating threat level
+   - getting a chance to escape
+     - thanks to elevated threat level
+   - entering combat
+2. - find (optional) stuff on map
+   - put traps in places
+   - enchant food
+   - elevating threat level
+   - adding fog of war
+3. make them say where they are going before they go
+4. - run = more movement
+   - sneak = harder to find
+
+
+WHAT WE HAVE NOW
+- semi-random enemy movement
+- brightness which increase chance of being seen
+- sneak / run = short silent movement vs long loud movement
+
+Problem
+- Need to test on player
+
+Solutions
+- Implement the whole game and try it yourself
+  - Implement random generated maps
+- Find someone to play it
+  - IRL
+  - Screen share
+- Game playable over network
+  - Obvious problem: more coding
+
+NICE TO HAVE
+- Planting traps / enchanting things
+
+
+
+STARTED DOING
+- functions to query hexagons
+  - distance
+- for the purpose of creating fog of war
